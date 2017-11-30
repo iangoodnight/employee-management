@@ -27,7 +27,7 @@
 		<h6>A Comprehensive Directory of Employee Billable Hours</h6>
 	</div>
 	<!-- This is where we will push our firebase data -->
-	<div id="output">
+	<div class="field" id="output">
 		<h4>Current Employees</h4>
 		<table class="table table-bordered">
 			<thead>
@@ -45,7 +45,7 @@
 		</table>
 	</div>
 	<!-- Input form -->
-	<div id="input">
+	<div class="field" id="input">
 		<h4>Add Employee</h4>
 		<form>
 		  <div class="form-group">
@@ -116,25 +116,28 @@
 			start = $("#start-date").val().trim();
 			rate = $("#monthly-rate").val().trim();
 
-			database.ref().push({
-      		Name: name,
-      		Role: role,
-      		Start: start,
-      		Rate: rate
-      		
-    	});
-		});
+			var newEmp = {
+				Name: name,
+      			Role: role,
+      			Start: start,
+      			Rate: rate 
+			};
+
+			database.ref().push(newEmp);
+		
 
 		data.ref().on("child_added", function(childSnapshot) {
-			console.log(childSnapshot.val().name);
-			console.log(childSnapshot.val().role);
-			console.log(childSnapshot.val().start);
-			console.log(childSnapshot.val().rate);
+			console.log(childSnapshot.val().Name);
+			console.log(childSnapshot.val().Role);
+			console.log(childSnapshot.val().Start);
+			console.log(childSnapshot.val().Rate);
 		});
 
-		dataRef.ref().orderByCHild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
+		dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
 
-		})
+		});
+		event.preventDefault();
+		});
 	</script>
 </body>
 </html>
