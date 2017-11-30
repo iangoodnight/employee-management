@@ -2,11 +2,17 @@
 <html>
 <head>
 	<title>Employee-Data</title>
+	<!-- Reset CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/CSS/reset.css">
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Local Stylesheet -->
+	<link rel="stylesheet" type="text/css" href="assets/CSS/style.css">
 
 	<!-- Link to Jquery -->
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -20,6 +26,7 @@
 		<h1>Employee Data Management</h1>
 		<h6>A Comprehensive Directory of Employee Billable Hours</h6>
 	</div>
+	<!-- This is where we will push our firebase data -->
 	<div id="output">
 		<h3>Current Employees</h3>
 		<table class="table table-bordered">
@@ -34,6 +41,7 @@
 			</thead>
 		</table>
 	</div>
+	<!-- Input form -->
 	<div id="input">
 		<h3>Add Employee</h3>
 		<form>
@@ -57,6 +65,18 @@
 		</form>
 	</div>
 	</div>
-
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyCGKeX48AcWxbfXNnMo9fT3grY8vyRPnLg",
+	    authDomain: "employee-data-69180.firebaseapp.com",
+	    databaseURL: "https://employee-data-69180.firebaseio.com",
+	    projectId: "employee-data-69180",
+	    storageBucket: "",
+	    messagingSenderId: "195366354952"
+	  };
+	  firebase.initializeApp(config);
+	</script>
 </body>
 </html>
