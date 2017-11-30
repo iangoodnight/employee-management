@@ -28,7 +28,7 @@
 	</div>
 	<!-- This is where we will push our firebase data -->
 	<div id="output">
-		<h3>Current Employees</h3>
+		<h4>Current Employees</h4>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -39,11 +39,14 @@
 					<th>Monthly Rate ($)</th>
 					<th>Total Billed ($)</th>
 			</thead>
+				<tr id="newRow">
+					
+				</tr>
 		</table>
 	</div>
 	<!-- Input form -->
 	<div id="input">
-		<h3>Add Employee</h3>
+		<h4>Add Employee</h4>
 		<form>
 		  <div class="form-group">
 		    <label for="Employee-Name">Employee Name</label>
@@ -61,7 +64,7 @@
 		    <label for="Monthly-Rate">Monthly Rate</label>
 		    <input type="number" class="form-control" id="monthly-rate" placeholder="$0,000.00 USD">
 		  </div>
-		  <button type="submit" class="btn btn-default">Submit</button>
+		  <button type="submit" id="submit" class="btn btn-default">Submit</button>
 		</form>
 	</div>
 	</div>
@@ -77,6 +80,61 @@
 	    messagingSenderId: "195366354952"
 	  };
 	  firebase.initializeApp(config);
+
+	  // Create a database
+	  var database = firebase.database();
+
+	  // Initial values
+	  var name = "";
+	  var role = "";
+	  var start = "";
+	  var rate = 0;
+
+	// --------------------------------------------------------------
+
+	// At the initial load and subsequent value changes, get a snapshot of the stored data.
+	// This function allows you to update your page in real-time when the firebase database changes.
+	database.ref().on("value", function(snapshot) {
+
+		if (snapshot.child("name").exists() && snapshot.child("role").exists() && snapshot.child("start").exists() && snapshot.child("rate").exists()) {
+			name = snapshot.val().name;
+			role = snapshot.val().role;
+			start = snapshot.val().start;
+			rate = parseInt(snapshot.val().rate);
+
+			var newRow = $("<td>");
+			newRow.html(name);
+		}
+
+		}, function(errorObject) {
+  		console.log("The read failed: " + errorObject.code);
+		});
+
+		$("#submit").on("click", function() {
+			name = $("#employee-name").val().trim();
+			role = $("#role").val().trim();
+			start = $("#start-date").val().trim();
+			rate = $("#monthly-rate").val().trim();
+
+			database.ref().push({
+      		Name: name,
+      		Role: role,
+      		Start: start,
+      		Rate: rate
+      		
+    	});
+		});
+
+		data.ref().on("child_added", function(childSnapshot) {
+			console.log(childSnapshot.val().name);
+			console.log(childSnapshot.val().role);
+			console.log(childSnapshot.val().start);
+			console.log(childSnapshot.val().rate);
+		});
+
+		dataRef.ref().orderByCHild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
+
+		})
 	</script>
 </body>
 </html>
